@@ -1241,3 +1241,79 @@ h1 {
     align-items: center;
     gap: 1rem;
 }
+
+/* Social Login Styles */
+.social-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.social-divider::before,
+.social-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--border);
+}
+
+.social-divider span {
+    padding: 0 10px;
+}
+
+.social-login-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1rem;
+}
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.google-btn:hover { color: #ea4335; border-color: #ea4335; }
+.github-btn:hover { color: #a1a1aa; border-color: #a1a1aa; }
+.facebook-btn:hover { color: #1877f2; border-color: #1877f2; }
+.instagram-btn:hover { color: #e1306c; border-color: #e1306c; }
+.apple-btn:hover { color: #ffffff; border-color: #ffffff; background: #000; }
+
+.btn-loading {
+    color: transparent !important;
+}
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
