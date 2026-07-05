@@ -1317,3 +1317,87 @@ h1 {
     to { transform: rotate(360deg); }
 }
 
+
+/* Knowledge Carousel Styles */
+.knowledge-carousel-container {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.carousel-title {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    padding: 0 1rem;
+}
+
+.carousel-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+.knowledge-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    padding: 1rem;
+    /* Hide scrollbar for a cleaner look */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.knowledge-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-card {
+    min-width: 85%;
+    max-width: 400px;
+    scroll-snap-align: center;
+    background: rgba(18, 25, 43, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+}
+
+.carousel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.modern-card .card-icon { color: #38bdf8; }
+.ayurvedic-card .card-icon { color: #10b981; }
+.ancient-card .card-icon { color: #f59e0b; }
+
+.carousel-card h3 {
+    font-size: 1.3rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+}
+
+.carousel-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
