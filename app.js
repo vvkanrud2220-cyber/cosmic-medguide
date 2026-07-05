@@ -1,27 +1,89 @@
 // Initialize Lucide Icons
 lucide.createIcons();
 
-// Login Logic
+// Login / Auth Logic
 const loginForm = document.getElementById('loginForm');
 const loginSection = document.getElementById('loginSection');
 const mainApp = document.getElementById('mainApp');
 const loginError = document.getElementById('loginError');
+const signInBtn = document.getElementById('signInBtn');
+const signUpBtn = document.getElementById('signUpBtn');
+const signOutBtn = document.getElementById('signOutBtn');
+const profileEmailDisplay = document.getElementById('profileEmailDisplay');
 
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const username = document.getElementById('username').value.toLowerCase().trim();
-    const password = document.getElementById('password').value.trim();
+// Show error helper
+function showAuthError(msg) {
+    loginError.textContent = msg;
+    loginError.classList.remove('hidden');
+}
 
-    if (username === 'admin' && password === '1234') {
-        loginError.classList.add('hidden');
-        loginSection.classList.add('fade-out');
-        setTimeout(() => {
-            loginSection.classList.add('hidden');
-            mainApp.classList.remove('hidden');
-        }, 400); // Wait for fade out animation
-    } else {
-        loginError.classList.remove('hidden');
+// Ensure Supabase is initialized before using Auth
+function checkSupabase() {
+    if (!supabase) {
+        showAuthError('Supabase is not configured. Please add your API keys in app.js.');
+        return false;
     }
+    return true;
+}
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!checkSupabase()) return;
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    signInBtn.textContent = 'Signing in...';
+    signInBtn.disabled = true;
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    
+    if (error) {
+        showAuthError(error.message);
+    } else {
+        loginError.classList.add('hidden');
+    }
+    
+    signInBtn.textContent = 'Sign In';
+    signInBtn.disabled = false;
+});
+
+signUpBtn.addEventListener('click', async () => {
+    if (!checkSupabase()) return;
+    
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        showAuthError('Please enter an email and password to sign up.');
+        return;
+    }
+
+    signUpBtn.textContent = 'Signing up...';
+    signUpBtn.disabled = true;
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    
+    if (error) {
+        showAuthError(error.message);
+    } else {
+        showAuthError('Success! Please check your email for a confirmation link (if enabled in Supabase), or simply sign in now!');
+        loginError.style.color = '#10b981'; // Green for success
+    }
+    
+    signUpBtn.textContent = 'Sign Up';
+    signUpBtn.disabled = false;
+});
+
+signOutBtn.addEventListener('click', async () => {
+    if (supabase) {
+        await supabase.auth.signOut();
+    }
+    // Switch UI back to login screen
+    mainApp.classList.add('hidden');
+    loginSection.classList.remove('hidden');
+    loginSection.classList.remove('fade-out');
+    document.getElementById('password').value = '';
 });
 
 // Mock Database of Medicines
@@ -584,6 +646,25 @@ if (SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' && window.supabase) {
     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     console.log("Supabase client initialized!");
     fetchCartFromSupabase();
+
+    // Listen for Authentication state changes
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (session) {
+            // User is logged in
+            profileEmailDisplay.textContent = session.user.email;
+            loginSection.classList.add('fade-out');
+            setTimeout(() => {
+                loginSection.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+            }, 400);
+        } else {
+            // User is logged out
+            profileEmailDisplay.textContent = 'Not logged in';
+            mainApp.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+            loginSection.classList.remove('fade-out');
+        }
+    });
 }
 
 async function fetchCartFromSupabase() {
