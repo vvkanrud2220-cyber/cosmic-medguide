@@ -9,8 +9,8 @@ const loginError = document.getElementById('loginError');
 
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value.toLowerCase().trim();
+    const password = document.getElementById('password').value.trim();
 
     if (username === 'admin' && password === '1234') {
         loginError.classList.add('hidden');
