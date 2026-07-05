@@ -31,20 +31,25 @@
                 <img src="logo.jpg" alt="MedGuide 3D Logo" class="logo-3d">
                 <h1>MedGuide</h1>
             </div>
-            <p class="login-subtitle">Please login to continue</p>
-            <form id="loginForm" class="login-form">
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Enter 'admin'" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter '1234'" required>
-                </div>
-                <div id="loginError" class="login-error hidden">Invalid username or password</div>
-                <button type="submit" class="login-btn">Log In</button>
-            </form>
-        </div>
+            <p class="subtitle">Securely access your 3D Medical Guide.</p>
+        
+        <form id="loginForm" class="login-form">
+            <div class="input-group">
+                <i data-lucide="mail"></i>
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <i data-lucide="lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div id="loginError" class="error-text hidden">Authentication failed. Please check your credentials.</div>
+            
+            <div style="display: flex; gap: 10px; width: 100%;">
+                <button type="submit" id="signInBtn" class="btn primary-btn" style="flex: 1;">Sign In</button>
+                <button type="button" id="signUpBtn" class="btn secondary-btn" style="flex: 1; background: var(--surface); color: var(--primary); border: 1px solid var(--primary);">Sign Up</button>
+            </div>
+        </form>
+    </div>
     </div>
 
     <div id="mainApp" class="app-container hidden">
@@ -173,9 +178,14 @@
                 <div class="static-content">
                     <h2>User Profile</h2>
                     <div class="profile-card">
-                        <i data-lucide="user" style="width:60px;height:60px;color:var(--primary);"></i>
-                        <h3>Admin User</h3>
-                        <p>Logged in successfully</p>
+                        <div class="profile-avatar">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <h3 id="profileEmailDisplay">Not logged in</h3>
+                        <p>Secured by Supabase Auth</p>
+                        <button id="signOutBtn" class="btn secondary-btn" style="background: var(--accent-red); color: white; border: none; padding: 0.5rem 2rem; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 1rem;">
+                            <i data-lucide="log-out" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:5px;"></i> Sign Out
+                        </button>
                     </div>
                 </div>
             </div>
