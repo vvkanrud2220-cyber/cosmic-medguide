@@ -94,6 +94,38 @@
         <main class="main-content-padded">
             <div id="homeSection" class="tab-content active">
                 
+                <!-- Knowledge Carousel -->
+                <div class="knowledge-carousel-container">
+                    <h2 class="carousel-title">Explore Medical Knowledge</h2>
+                    <p class="carousel-subtitle">Swipe left and right to discover ancient and modern therapies</p>
+                    <div class="knowledge-carousel">
+                        <div class="carousel-card modern-card">
+                            <i data-lucide="microscope" class="card-icon"></i>
+                            <h3>Modern Medication</h3>
+                            <p>The science of contemporary healing. Discover how modern chemical compounds are synthesized to target specific cellular receptors, providing rapid and precise treatments for diseases.</p>
+                        </div>
+                        <div class="carousel-card ayurvedic-card">
+                            <i data-lucide="leaf" class="card-icon"></i>
+                            <h3>Ayurvedic Knowledge</h3>
+                            <p>The ancient Indian holistic healing system. Ayurveda focuses on balancing the mind, body, and spirit through herbal remedies, specialized diets, and natural living to prevent illness.</p>
+                        </div>
+                        <div class="carousel-card ancient-card">
+                            <i data-lucide="moon" class="card-icon"></i>
+                            <h3>Ancient Therapy</h3>
+                            <p>Historical healing practices spanning millennia. Explore the wisdom of meditation, acupuncture, sound therapy, and natural remedies passed down through generations of healers.</p>
+                        </div>
+                        <div class="carousel-card ayurvedic-card" style="border-color: rgba(16, 185, 129, 0.3);">
+                            <i data-lucide="flower-2" class="card-icon" style="color: #10b981;"></i>
+                            <h3>Ancient Indian Treatments</h3>
+                            <p>India's timeless healing traditions. Featuring Panchakarma for deep detoxification, Yoga therapy for mind-body unity, and potent herbal decoctions to restore your vital energies (Doshas).</p>
+                        </div>
+                        <div class="carousel-card modern-card" style="border-color: rgba(245, 158, 11, 0.3);">
+                            <i data-lucide="user" class="card-icon" style="color: #f59e0b;"></i>
+                            <h3>Ancient Indian Doctors</h3>
+                            <p>Honoring medical pioneers. <strong>Sushruta</strong> (Father of Surgery) documented complex surgical procedures 2,500 years ago, and <strong>Charaka</strong> (Father of Medicine) authored foundational texts on physiology and immunity.</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="animation-3d-container">
                     <div class="orbital-ring ring-1"></div>
                     <div class="orbital-ring ring-2"></div>
@@ -202,16 +234,14 @@
             <div id="profileSection" class="tab-content hidden">
                 <div class="static-content">
                     <h2>User Profile</h2>
-                    <div class="profile-card">
                         <div class="profile-avatar">
                             <i data-lucide="user"></i>
                         </div>
-                        <h3 id="profileEmailDisplay">Not logged in</h3>
-                        <p>Secured by Supabase Auth</p>
-                        <button id="signOutBtn" class="btn secondary-btn" style="background: var(--accent-red); color: white; border: none; padding: 0.5rem 2rem; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 1rem;">
-                            <i data-lucide="log-out" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:5px;"></i> Sign Out
-                        </button>
-                    </div>
+                    <h3 id="profileEmailDisplay">Not logged in</h3>
+                    <p>Secured by Supabase Auth</p>
+                    <button id="signOutBtn" class="btn secondary-btn" style="background: var(--accent-red); color: white; border: none; padding: 0.5rem 2rem; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 1rem;">
+                        <i data-lucide="log-out" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:5px;"></i> Sign Out
+                    </button>
                 </div>
             </div>
 
@@ -266,21 +296,22 @@
             <h2>Scan Medicine</h2>
             <button id="closeScannerBtn" class="close-btn"><i data-lucide="x"></i></button>
         </div>
-        <div class="scanner-viewfinder">
+        <div class="scanner-container">
             <video id="cameraStream" autoplay playsinline></video>
-            <div class="scan-overlay">
+            <div class="scanner-overlay"></div>
+            <div class="scanner-reticle">
                 <div class="corner top-left"></div>
                 <div class="corner top-right"></div>
                 <div class="corner bottom-left"></div>
                 <div class="corner bottom-right"></div>
-                <div class="laser"></div>
+                <div class="reticle-line horizontal"></div>
+                <div class="reticle-line vertical"></div>
             </div>
         </div>
+        <div id="scannerStatus" class="scanner-status">Initializing camera...</div>
         <div class="scanner-controls">
-            <p id="scannerStatus">Point camera at the medicine name...</p>
-            <button id="captureBtn" class="capture-btn">
-                <i data-lucide="camera"></i> Scan Now
-            </button>
+            <button type="button" id="toggleTorchBtn" class="btn icon-btn"><i data-lucide="flashlight"></i></button>
+            <button type="button" id="captureBtn" class="btn primary-btn"><i data-lucide="camera"></i> Scan</button>
         </div>
         <canvas id="snapshotCanvas" class="hidden"></canvas>
     </div>
