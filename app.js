@@ -56,19 +56,22 @@ signOutBtn.addEventListener('click', () => {
 });
 
 // Social Login Fake Handler
-window.handleSocialLogin = function(provider) {
-    const btn = event.currentTarget;
-    const originalContent = btn.innerHTML;
+window.handleSocialLogin = function(provider, e) {
+    const btn = e ? e.currentTarget : null;
+    const originalContent = btn ? btn.innerHTML : '';
     
     // Add loading state
-    btn.classList.add('btn-loading');
+    if (btn) btn.classList.add('btn-loading');
     
     // Simulate network delay
     setTimeout(() => {
-        btn.classList.remove('btn-loading');
+        if (btn) btn.classList.remove('btn-loading');
         
         loginError.classList.add('hidden');
-        profileEmailDisplay.textContent = provider + ' User (Offline Mode)';
+        profileEmailDisplay.textContent = provider + ' User';
+        
+        const profilePhone = document.getElementById('profilePhoneDisplay');
+        if (profilePhone) profilePhone.textContent = 'Verified via ' + provider;
         
         loginSection.classList.add('fade-out');
         setTimeout(() => {
