@@ -23,7 +23,7 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('email').value.toLowerCase().trim();
     const password = document.getElementById('password').value.trim();
 
-    if (email === 'admin' && password === '1234') {
+    if (email === 'admin' && password.length >= 10) {
         loginError.classList.add('hidden');
         profileEmailDisplay.textContent = 'Admin (Offline Mode)';
         
@@ -33,7 +33,7 @@ loginForm.addEventListener('submit', (e) => {
             mainApp.classList.remove('hidden');
         }, 400); // Wait for fade out animation
     } else {
-        showAuthError("Invalid credentials. Try 'admin' and '1234'.");
+        showAuthError("Invalid credentials. Try 'admin' and your phone number.");
     }
 });
 
