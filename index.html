@@ -37,12 +37,12 @@
         
         <form id="loginForm" class="login-form">
             <div class="input-group">
-                <i data-lucide="mail"></i>
-                <input type="text" id="email" placeholder="Username (type 'admin')" required>
+                <i data-lucide="user"></i>
+                <input type="text" id="email" placeholder="User Name (type 'admin')" required>
             </div>
             <div class="input-group">
-                <i data-lucide="lock"></i>
-                <input type="password" id="password" placeholder="Password" required>
+                <i data-lucide="phone"></i>
+                <input type="tel" id="password" placeholder="Phone Number" required pattern="[0-9]*">
             </div>
             <div id="loginError" class="error-text hidden">Authentication failed. Please check your credentials.</div>
             
