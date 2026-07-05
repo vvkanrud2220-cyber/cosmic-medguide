@@ -17,68 +17,31 @@ function showAuthError(msg) {
     loginError.classList.remove('hidden');
 }
 
-// Ensure Supabase is initialized before using Auth
-function checkSupabase() {
-    if (!supabase) {
-        showAuthError('Supabase is not configured. Please add your API keys in app.js.');
-        return false;
-    }
-    return true;
-}
-
-loginForm.addEventListener('submit', async (e) => {
+loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!checkSupabase()) return;
     
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.toLowerCase().trim();
+    const password = document.getElementById('password').value.trim();
 
-    signInBtn.textContent = 'Signing in...';
-    signInBtn.disabled = true;
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    
-    if (error) {
-        showAuthError(error.message);
-    } else {
+    if (email === 'admin' && password === '1234') {
         loginError.classList.add('hidden');
-    }
-    
-    signInBtn.textContent = 'Sign In';
-    signInBtn.disabled = false;
-});
-
-signUpBtn.addEventListener('click', async () => {
-    if (!checkSupabase()) return;
-    
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    
-    if (!email || !password) {
-        showAuthError('Please enter an email and password to sign up.');
-        return;
-    }
-
-    signUpBtn.textContent = 'Signing up...';
-    signUpBtn.disabled = true;
-
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    
-    if (error) {
-        showAuthError(error.message);
+        profileEmailDisplay.textContent = 'Admin (Offline Mode)';
+        
+        loginSection.classList.add('fade-out');
+        setTimeout(() => {
+            loginSection.classList.add('hidden');
+            mainApp.classList.remove('hidden');
+        }, 400); // Wait for fade out animation
     } else {
-        showAuthError('Success! Please check your email for a confirmation link (if enabled in Supabase), or simply sign in now!');
-        loginError.style.color = '#10b981'; // Green for success
+        showAuthError("Invalid credentials. Try 'admin' and '1234'.");
     }
-    
-    signUpBtn.textContent = 'Sign Up';
-    signUpBtn.disabled = false;
 });
 
-signOutBtn.addEventListener('click', async () => {
-    if (supabase) {
-        await supabase.auth.signOut();
-    }
+signUpBtn.addEventListener('click', () => {
+    showAuthError("Sign up is disabled in Offline Mode. Log in as admin.");
+});
+
+signOutBtn.addEventListener('click', () => {
     // Switch UI back to login screen
     mainApp.classList.add('hidden');
     loginSection.classList.remove('hidden');
@@ -634,66 +597,14 @@ function renderStore() {
 }
 
 // ==========================================
-// Supabase Backend Integration
+// Offline Cart Logic
 // ==========================================
-const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
-
-let supabase = null;
 let cartItems = [];
 
-if (SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' && window.supabase) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log("Supabase client initialized!");
-    fetchCartFromSupabase();
-
-    // Listen for Authentication state changes
-    supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            // User is logged in
-            profileEmailDisplay.textContent = session.user.email;
-            loginSection.classList.add('fade-out');
-            setTimeout(() => {
-                loginSection.classList.add('hidden');
-                mainApp.classList.remove('hidden');
-            }, 400);
-        } else {
-            // User is logged out
-            profileEmailDisplay.textContent = 'Not logged in';
-            mainApp.classList.add('hidden');
-            loginSection.classList.remove('hidden');
-            loginSection.classList.remove('fade-out');
-        }
-    });
-}
-
-async function fetchCartFromSupabase() {
-    try {
-        const { data, error } = await supabase.from('cart_items').select('*');
-        if (error) throw error;
-        cartItems = data || [];
-        renderCart();
-    } catch (err) {
-        console.error("Error fetching cart from Supabase:", err);
-    }
-}
-
 // Simulate buying a medicine
-window.buyMedicine = async function(name, price) {
-    if (supabase) {
-        try {
-            const { data, error } = await supabase.from('cart_items').insert([{ name, price }]);
-            if (error) throw error;
-            await fetchCartFromSupabase();
-        } catch (err) {
-            console.error("Supabase insert error:", err);
-            cartItems.push({name, price}); // fallback
-            renderCart();
-        }
-    } else {
-        cartItems.push({name, price});
-        renderCart();
-    }
+window.buyMedicine = function(name, price) {
+    cartItems.push({name, price});
+    renderCart();
     alert(`Successfully added ${name} to your cart for ₹${price}!`);
 };
 
