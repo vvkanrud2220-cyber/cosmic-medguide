@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedGuide - Medicine Timing & Details</title>
+    <meta name="description" content="Accurate information on medicine timing, uses, and side effects.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tesseract.js for OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="login-overlay">
+        <!-- 3D Planetary Motion -->
+        <div class="solar-system">
+            <div class="sun"></div>
+            <div class="orbit orbit-mercury"><div class="planet mercury"></div></div>
+            <div class="orbit orbit-venus"><div class="planet venus"></div></div>
+            <div class="orbit orbit-earth"><div class="planet earth"></div></div>
+            <div class="orbit orbit-mars"><div class="planet mars"></div></div>
+        </div>
+
+        <div class="login-box">
+            <div class="logo">
+                <img src="logo.jpg" alt="MedGuide 3D Logo" class="logo-3d">
+                <h1>MedGuide</h1>
+            </div>
+            <p class="login-subtitle">Please login to continue</p>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter 'admin'" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter '1234'" required>
+                </div>
+                <div id="loginError" class="login-error hidden">Invalid username or password</div>
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainApp" class="app-container hidden">
+        <header>
+            <div class="e2e-badge"><i data-lucide="lock"></i> End-to-End Encrypted</div>
+            <div class="cosmic-header">
+                <img src="cosmic_clashes.jpg" alt="Cosmic Clashes Logo" class="cosmic-logo">
+                <h2 class="cosmic-title">Cosmic Clashes</h2>
+            </div>
+            <div class="logo">
+                <img src="logo.jpg" alt="MedGuide 3D Logo" class="logo-3d">
+                <h1>MedGuide</h1>
+            </div>
+            <p class="subtitle">Know your medicine. Take it right.</p>
+        </header>
+
+        <main class="main-content-padded">
+            <div id="homeSection" class="tab-content active">
+                
+                <div class="animation-3d-container">
+                    <div class="orbital-ring ring-1"></div>
+                    <div class="orbital-ring ring-2"></div>
+                    <div class="orbital-ring ring-3"></div>
+                    <div class="core-glow">
+                        <i data-lucide="cross" style="color: white; width: 30px; height: 30px;"></i>
+                    </div>
+                    <div class="orbiting-group">
+                        <div class="floating-item item-pill"><i data-lucide="pill"></i></div>
+                        <div class="floating-item item-leaf"><i data-lucide="leaf"></i></div>
+                        <div class="floating-item item-drop"><i data-lucide="droplet"></i></div>
+                    </div>
+                </div>
+
+                <div class="search-section">
+                <div class="search-bar">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search for a medicine (e.g., Paracetamol)..." aria-label="Search for medicine">
+                    <button id="clearSearch" class="clear-btn hidden" aria-label="Clear search">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div id="searchResults" class="search-results hidden">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+
+            <div id="medicineDetails" class="medicine-details hidden">
+                <!-- Medicine details will appear here -->
+            </div>
+            
+            <div id="emptyState" class="empty-state">
+                <div class="icon-circle">
+                    <i data-lucide="heart-pulse"></i>
+                </div>
+                <h2>Search for a medicine to see details</h2>
+                <p>Find correct timing gaps, uses, and side effects.</p>
+            </div>
+            
+            <div class="mission-section">
+                <h3><i data-lucide="info" class="mission-icon"></i> About MedGuide</h3>
+                <p><strong>Basic Usage:</strong> Simply type your medicine's name in the search bar above to instantly find vital information on timing gaps, food requirements, and side effects.</p>
+                <div class="rural-mission">
+                    <h4>Empowering Rural Healthcare</h4>
+                    <p>In many rural communities, lack of information or incorrect guidance about medicine usage can lead to severe health consequences. MedGuide uses accessible pharma-tech to bridge this gap, ensuring that every patient—regardless of their background—has access to accurate, life-saving knowledge to take their medication safely.</p>
+                </div>
+
+                <div class="ayurveda-tips">
+                    <h4><i data-lucide="leaf"></i> Ayurvedic Treatment Tips</h4>
+                    <ul class="tips-list">
+                        <li><strong>Holistic Approach:</strong> Ayurveda treats the root cause, not just symptoms. Patience is key as natural remedies take time to show full effect.</li>
+                        <li><strong>Dietary Balance:</strong> Align your diet with your dosha (body type). Avoid extremely cold or processed foods during treatment.</li>
+                        <li><strong>Hydration:</strong> Drink warm water regularly to help flush out toxins (Ama) from the body.</li>
+                        <li><strong>Consultation:</strong> Never mix Ayurvedic treatments with allopathic (general) medicines without consulting both your doctors to avoid harmful interactions.</li>
+                    </ul>
+                </div>
+
+            </div> <!-- End homeSection -->
+
+            <!-- Cart Section -->
+            <div id="cartSection" class="tab-content hidden">
+                <div class="static-content">
+                    <h2>Your Cart</h2>
+                    <p>Items you want to purchase will appear here.</p>
+                    <div id="cartItemsList" class="cart-items-list">
+                        <!-- Cart items -->
+                    </div>
+                </div>
+                
+                <!-- The existing Store Grid stays here so people can buy things to add to cart -->
+                <div class="static-content" style="margin-top: 2rem;">
+                    <h2>Buy Medicines at Best Prices</h2>
+                    <p>Compare local store prices with our exclusive discounted prices.</p>
+                    <div id="storeGrid" class="store-grid">
+                        <!-- Store cards will be injected here by app.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Desk Modal (Overlay) -->
+            <div id="helpDeskModal" class="modal hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
+                <div class="static-content" style="background: #ffffff; padding: 2rem; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--primary); box-shadow: 0 0 30px rgba(168,85,247,0.4); position: relative;">
+                    <button onclick="closeHelpDesk()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-muted); cursor: pointer;">
+                        <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                    </button>
+                    <h2 style="margin-top: 0; color: #000000;">Help Desk</h2>
+                    
+                    <!-- Glowing Display of Contact Info -->
+                    <div style="background: #ffffff; border: 1px solid var(--primary); padding: 1.5rem; border-radius: 12px; text-align: center; margin: 1.5rem 0; box-shadow: 0 0 15px rgba(168,85,247,0.2);">
+                        <div style="font-weight: bold; color: var(--primary); font-size: 1.2rem; margin-bottom: 0.75rem;">COSMIC CLASHES TEAM</div>
+                        <div style="font-size: 0.95rem; color: #000000; margin-bottom: 1rem;">G K PRAVEEN KUMAR • VIVEKANIRUDH • SHRAVAN REDDY • S PRAVEEN</div>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: #10b981; font-weight: 700; font-size: 1.1rem;">
+                            <i data-lucide="phone" style="width: 20px; height: 20px;"></i>
+                            <span>8500605864, 9010218030</span>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 0.9rem; color: #000000;">1. Tap the search bar on the <strong>Home</strong> screen.</p>
+                    <p style="font-size: 0.9rem; color: #000000;">2. Type the name of your medicine.</p>
+                    <p style="font-size: 0.9rem; color: #000000;">3. Carefully read <strong>Time Gap</strong> & <strong>Food Instructions</strong>.</p>
+                    <p style="color: var(--accent-red); font-weight: 500; font-size: 0.85rem; margin-top: 1rem;">Disclaimer: This app is for informational purposes only. Always consult your duty doctor.</p>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profileSection" class="tab-content hidden">
+                <div class="static-content">
+                    <h2>User Profile</h2>
+                    <div class="profile-card">
+                        <i data-lucide="user" style="width:60px;height:60px;color:var(--primary);"></i>
+                        <h3>Admin User</h3>
+                        <p>Logged in successfully</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Details Section (Creators & Contact) -->
+            <div id="appDetailsSection" class="tab-content hidden">
+                <div class="static-content">
+                    <h2>App Details</h2>
+                    <p><strong>Version:</strong> 2.0.1 (E2E Encrypted)</p>
+                    <br>
+                    <div class="creators-footer" style="margin-top: 0;">
+                        <div class="team-badge">COSMIC CLASHES</div>
+                        <p class="creators-title">Created By Members:</p>
+                        <p class="creators-names">G K PRAVEEN KUMAR • VIVEKANIRUDH • SHRAVAN REDDY • S PRAVEEN</p>
+                        <div class="footer-contact">
+                            <i data-lucide="phone" class="phone-icon"></i>
+                            <span>+91 8500605864, +91 9010218030</span>
+                        </div>
+                        <div class="footer-contact" style="margin-top: 0.5rem;">
+                            <i data-lucide="mail" class="phone-icon"></i>
+                            <span>vvkanrud2220@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <button class="nav-tab active" data-target="homeSection"><i data-lucide="home"></i><span>Home</span></button>
+            <button class="nav-tab" data-target="cartSection"><i data-lucide="shopping-cart"></i><span>Cart</span></button>
+            <button class="nav-tab" data-target="helpDeskSection" style="flex: 2;">
+                <i data-lucide="help-circle"></i>
+                <span style="font-size: 1rem; font-weight: bold;">Help Desk</span>
+                <div style="font-size: 0.5rem; line-height: 1.2; margin-top: 4px; text-align: center; opacity: 0.8;">
+                    📞 8500605864, 9010218030<br>
+                    Team: G K PRAVEEN, VIVEKANIRUDH, SHRAVAN, S PRAVEEN
+                </div>
+            </button>
+            <button class="nav-tab" data-target="profileSection"><i data-lucide="user"></i><span>Profile</span></button>
+            <button class="nav-tab" data-target="appDetailsSection"><i data-lucide="info"></i><span>App Details</span></button>
+        </nav>
+        
+        <!-- Floating Action Button for Scanner -->
+        <button id="openScannerBtn" class="scanner-fab">
+            <i data-lucide="scan-line"></i>
+        </button>
+    </div>
+
+    <!-- Scanner Modal -->
+    <div id="scannerModal" class="scanner-modal hidden">
+        <div class="scanner-header">
+            <h2>Scan Medicine</h2>
+            <button id="closeScannerBtn" class="close-btn"><i data-lucide="x"></i></button>
+        </div>
+        <div class="scanner-viewfinder">
+            <video id="cameraStream" autoplay playsinline></video>
+            <div class="scan-overlay">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+                <div class="laser"></div>
+            </div>
+        </div>
+        <div class="scanner-controls">
+            <p id="scannerStatus">Point camera at the medicine name...</p>
+            <button id="captureBtn" class="capture-btn">
+                <i data-lucide="camera"></i> Scan Now
+            </button>
+        </div>
+        <canvas id="snapshotCanvas" class="hidden"></canvas>
+    </div>
+    
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
