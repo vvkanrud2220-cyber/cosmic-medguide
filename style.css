@@ -1401,3 +1401,67 @@ h1 {
     line-height: 1.5;
 }
 
+
+/* Scanner Reticle and Torch Styles */
+.scanner-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.scanner-reticle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 150px;
+    z-index: 11;
+    pointer-events: none;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--accent-blue);
+}
+
+.top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+.top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
+.bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+.bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.reticle-line {
+    position: absolute;
+    background: rgba(56, 189, 248, 0.5);
+}
+.reticle-line.horizontal {
+    top: 50%; left: 0; right: 0; height: 1px;
+}
+.reticle-line.vertical {
+    left: 50%; top: 0; bottom: 0; width: 1px;
+}
+
+.icon-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.icon-btn:hover, .icon-btn.active {
+    background: var(--accent-blue);
+    color: white;
+}
+
