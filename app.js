@@ -470,6 +470,48 @@ const snapshotCanvas = document.getElementById('snapshotCanvas');
 const scannerStatus = document.getElementById('scannerStatus');
 
 let videoTrack = null;
+let torchOn = false;
+
+// Levenshtein Distance for Fuzzy String Matching
+function levenshteinDistance(a, b) {
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) == a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+            }
+        }
+    }
+    return matrix[b.length][a.length];
+}
+
+// Toggle Flashlight
+document.getElementById('toggleTorchBtn').addEventListener('click', async (e) => {
+    if (videoTrack) {
+        const capabilities = videoTrack.getCapabilities();
+        if (capabilities.torch) {
+            torchOn = !torchOn;
+            try {
+                await videoTrack.applyConstraints({
+                    advanced: [{ torch: torchOn }]
+                });
+                e.currentTarget.classList.toggle('active');
+            } catch (err) {
+                console.error("Could not toggle torch", err);
+            }
+        } else {
+            alert("Flashlight is not supported on this device's camera.");
+        }
+    }
+});
 
 // Open Scanner
 openScannerBtn.addEventListener('click', async () => {
@@ -529,25 +571,39 @@ captureBtn.addEventListener('click', async () => {
         
         let foundMedicine = null;
 
-        // Fuzzy match against medicines data
+        // Advanced Fuzzy matching against medicines data
         for (const med of medicinesData) {
-            // Check if exact name or ID is in the text
             const basicName = med.name.toLowerCase().split(' ')[0];
+            
+            // Check direct inclusion
             if (text.includes(med.id) || text.includes(basicName)) {
                 foundMedicine = med;
                 break;
             }
-            // Check if any brand name is in the text
-            if (med.companies) {
-                const brands = med.companies.toLowerCase().split(',').map(b => b.trim());
-                for (const brand of brands) {
-                    if (brand.length > 3 && text.includes(brand)) {
+            
+            // Check Levenshtein Distance for typos (allow up to 2 typos for short words, 3 for long)
+            const words = text.split(/\s+/);
+            for (let word of words) {
+                if (word.length > 4) {
+                    const distance = levenshteinDistance(word, basicName);
+                    if (distance <= 2) {
                         foundMedicine = med;
                         break;
                     }
                 }
             }
-            if(foundMedicine) break;
+            if (foundMedicine) break;
+
+            // Check if any brand name is in the text
+            if (med.companies) {
+                for (let company of med.companies.split(',').map(b => b.trim())) {
+                    if (text.includes(company.toLowerCase())) {
+                        foundMedicine = med;
+                        break;
+                    }
+                }
+            }
+            if (foundMedicine) break;
         }
 
         if (foundMedicine) {
