@@ -23,9 +23,15 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('email').value.toLowerCase().trim();
     const password = document.getElementById('password').value.trim();
 
-    if (email === 'admin' && password.length >= 10) {
+    if (email.length > 2 && password.length >= 10) {
         loginError.classList.add('hidden');
-        profileEmailDisplay.textContent = 'Admin (Offline Mode)';
+        
+        // Dynamically set profile information
+        profileEmailDisplay.textContent = email;
+        const profilePhone = document.getElementById('profilePhoneDisplay');
+        if (profilePhone) {
+            profilePhone.textContent = '📞 ' + password;
+        }
         
         loginSection.classList.add('fade-out');
         setTimeout(() => {
@@ -33,7 +39,7 @@ loginForm.addEventListener('submit', (e) => {
             mainApp.classList.remove('hidden');
         }, 400); // Wait for fade out animation
     } else {
-        showAuthError("Invalid credentials. Try 'admin' and your phone number.");
+        showAuthError("Please enter a valid User Name and 10-digit Phone Number.");
     }
 });
 
