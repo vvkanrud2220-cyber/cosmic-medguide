@@ -49,6 +49,29 @@ signOutBtn.addEventListener('click', () => {
     document.getElementById('password').value = '';
 });
 
+// Social Login Fake Handler
+window.handleSocialLogin = function(provider) {
+    const btn = event.currentTarget;
+    const originalContent = btn.innerHTML;
+    
+    // Add loading state
+    btn.classList.add('btn-loading');
+    
+    // Simulate network delay
+    setTimeout(() => {
+        btn.classList.remove('btn-loading');
+        
+        loginError.classList.add('hidden');
+        profileEmailDisplay.textContent = provider + ' User (Offline Mode)';
+        
+        loginSection.classList.add('fade-out');
+        setTimeout(() => {
+            loginSection.classList.add('hidden');
+            mainApp.classList.remove('hidden');
+        }, 400);
+    }, 1200);
+};
+
 // Mock Database of Medicines
 const medicinesData = [
     {
