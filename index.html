@@ -13,6 +13,8 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tesseract.js for OCR -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- FontAwesome for Social Brand Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Login Section -->
@@ -47,6 +49,29 @@
             <div style="display: flex; gap: 10px; width: 100%;">
                 <button type="submit" id="signInBtn" class="btn primary-btn" style="flex: 1;">Sign In</button>
                 <button type="button" id="signUpBtn" class="btn secondary-btn" style="flex: 1; background: var(--surface); color: var(--primary); border: 1px solid var(--primary);">Sign Up</button>
+            </div>
+            
+            <!-- Social Logins -->
+            <div class="social-divider">
+                <span>Or continue with</span>
+            </div>
+            
+            <div class="social-login-grid">
+                <button type="button" class="social-btn google-btn" onclick="handleSocialLogin('Google')">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button type="button" class="social-btn github-btn" onclick="handleSocialLogin('GitHub')">
+                    <i class="fab fa-github"></i>
+                </button>
+                <button type="button" class="social-btn facebook-btn" onclick="handleSocialLogin('Facebook')">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button type="button" class="social-btn instagram-btn" onclick="handleSocialLogin('Instagram')">
+                    <i class="fab fa-instagram"></i>
+                </button>
+                <button type="button" class="social-btn apple-btn" onclick="handleSocialLogin('Apple ID')">
+                    <i class="fab fa-apple"></i>
+                </button>
             </div>
         </form>
     </div>
