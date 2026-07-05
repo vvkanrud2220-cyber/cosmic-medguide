@@ -38,7 +38,7 @@
         <form id="loginForm" class="login-form">
             <div class="input-group">
                 <i data-lucide="user"></i>
-                <input type="text" id="email" placeholder="User Name (type 'admin')" required>
+                <input type="text" id="email" placeholder="User Name" required>
             </div>
             <div class="input-group">
                 <i data-lucide="phone"></i>
@@ -239,7 +239,8 @@
                         <div class="profile-avatar">
                             <i data-lucide="user"></i>
                         </div>
-                    <h3 id="profileEmailDisplay">Not logged in</h3>
+                    <h3 id="profileEmailDisplay" style="text-transform: capitalize;">Not logged in</h3>
+                    <p id="profilePhoneDisplay" style="font-size: 1.1rem; color: #4b5563; font-weight: 500; margin-top: 0.5rem;"></p>
                     <p>Secured by Supabase Auth</p>
                     <button id="signOutBtn" class="btn secondary-btn" style="background: var(--accent-red); color: white; border: none; padding: 0.5rem 2rem; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 1rem;">
                         <i data-lucide="log-out" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:5px;"></i> Sign Out
